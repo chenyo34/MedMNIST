@@ -1,0 +1,1 @@
+To train the PathMNIST, the orignal dataset was stored in 28x28, 
