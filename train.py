@@ -53,8 +53,9 @@ def train(
         correct = 0
         total = 0
         batch_idx = 0
+        start = time.time()
 
-        print(f"\nTraining on Epoch: {epoch + 1}")
+        print(f"\nTraining on Epoch: {epoch}")
 
         for images, labels in train_loader:
             images = images.to(device).float()
@@ -71,18 +72,19 @@ def train(
             batch_correct = (preds == labels).sum().item()
             correct += batch_correct
             total += images.size(0)
-            if batch_idx % 10 == 0:
-                print(f"Current Batah Loss: {loss.item()} || Current Batah Accuracy: {batch_correct/images.size(0)} || Current Total Loss: {total_loss} || Accuracy: {correct/total}, ")
+            # if batch_idx % 50 == 0:
+            #     print(f"Batch {batch_idx} ||  Current Batah Loss: {loss.item():<.4} || Current Batah Accuracy: {batch_correct/images.size(0):<.4} || Current Total AvgLoss: {total_loss/total:<.4} || Accuracy: {correct/total:<.4}, ")
             batch_idx += 1
  
         avg_loss = total_loss / total
         accuracy = correct / total
+        elpased = time.time() - start
  
         history.epochs.append(epoch)
         history.losses.append(avg_loss)
         history.accuracies.append(accuracy)
  
-        print(f"Epoch: {epoch:<8} Average Loss: {avg_loss:<12.4f} Accuracy: {accuracy:<12.4f}")
+        print(f"Epoch: {epoch:<8} || Average Loss: {avg_loss:<12.4f} || Accuracy: {accuracy:<12.4f} || Time Spent: {elpased:<.4}")
 
         if config.save_checkpoints:
             os.makedirs(config.checkpoints_dir,
@@ -105,12 +107,12 @@ def train(
                 }
 
                 if is_best and config.save_best_only:
-                    ckpt_path = os.path.join(config.checkpoint_dir, "best.pt")
+                    ckpt_path = os.path.join(config.checkpoints_dir, "best.pt")
                     torch.save(checkpoint, ckpt_path)
                     print(f"Best checkpoint saved (accuracy={accuracy:.4f}), saveing path is: {ckpt_path}")
 
                 if save_this_epoch:
-                    ckpt_path = os.path.join(config.checkpoint_dir, f"epoch_{epoch:03d}.pt")
+                    ckpt_path = os.path.join(config.checkpoints_dir, f"epoch_{epoch:03d}.pt")
                     torch.save(checkpoint, ckpt_path)
                     print(f"Epoch checkpoint saved, saveing path is: {ckpt_path}")
         
