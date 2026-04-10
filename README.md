@@ -29,6 +29,17 @@ This project trains and evaluates CNN-based classifiers (ResNet18 and VGG16, bot
 ```
 
 ---
+### Input — RGB Histopathology Patch
+ 
+A raw 28×28 RGB tissue image fed into the model. Each patch represents one of nine colorectal tissue types.
+ 
+![Input tissue patch](input.jpg)
+ 
+### Output — Grad-CAM Explainability
+ 
+The Grad-CAM output shows three panels side by side: the original image, the raw activation heatmap (jet colormap), and the overlay blended on top of the tissue patch. Warmer colours (red/orange) indicate regions that most strongly influenced the model's predicted class.
+ 
+![Grad-CAM heatmap and overlay](output.jpg)
 
 ## Models
 
