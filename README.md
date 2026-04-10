@@ -110,7 +110,7 @@ history = train(model=model, config=config)
 | `checkpoints_dir`      | `checkpoints` | Directory for checkpoint files                   |
 | `save_frequency`       | 2             | Save a checkpoint every N epochs                 |
 | `save_best_only`       | True          | Also save `best.pt` whenever validation improves |
-| `early_stopping_patience` | —          | Stop early if validation does not improve        |
+| `early_stopping_patience` | —          | Stop early if validation accuracy and AUC does not improve        |
 
 Checkpoints are saved to `checkpoints/<run_name>/` and training metrics are logged as CSV files under `meta_logs/`.
 
